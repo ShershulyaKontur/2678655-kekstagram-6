@@ -3,9 +3,9 @@ function isLengthValid(input, len) {
 }
 
 function isPalindrome(input) {
-  const validateStroke = input.toString().replaceAll(' ', '').toLowerCase();
-  const reversedStroke = validateStroke.split('').reverse().join('');
-  return validateStroke === reversedStroke;
+  const validatedString = input.toString().replaceAll(' ', '').toLowerCase();
+  const reversedString = validatedString.split('').reverse().join('');
+  return validatedString === reversedString;
 }
 
 function getDigit(input) {
