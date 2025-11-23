@@ -1,14 +1,14 @@
-function isLengthValid(input, len) {
+export function isLengthValid(input, len) {
   return input.toString().length <= len;
 }
 
-function isPalindrome(input) {
+export function isPalindrome(input) {
   const validatedString = input.toString().replaceAll(' ', '').toLowerCase();
   const reversedString = validatedString.split('').reverse().join('');
   return validatedString === reversedString;
 }
 
-function getDigit(input) {
+export function getDigit(input) {
   if (typeof input === 'number') {
     return Math.abs(input);
   }
