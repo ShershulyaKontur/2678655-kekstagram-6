@@ -1,3 +1,3 @@
 import { similarPhoto } from './photos.js';
 
-similarPhoto();
+console.log(similarPhoto());

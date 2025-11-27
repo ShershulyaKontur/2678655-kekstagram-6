@@ -1,8 +1,6 @@
 import { PHOTO_COUNT, DESCRIPTION } from './data.js';
-import { getCount, getRandomInteger, getRandomArrayElement } from './utils.js';
+import { createSequentialId, getRandomInteger, getRandomArrayElement } from './utils.js';
 import { createComments } from './comments.js';
-
-const createSequentialId = getCount();
 
 const createPhoto = () => {
   const id = createSequentialId();

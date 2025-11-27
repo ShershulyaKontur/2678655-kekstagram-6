@@ -1,4 +1,4 @@
-import { getRandomUniqueInteger, getRandomArrayElement,getRandomInteger } from './utils.js';
+import { createRandomUniqueInteger, getRandomArrayElement,getRandomInteger } from './utils.js';
 import { NAME,MESSAGE } from './data.js';
 
 const getRandomMessage = () => {
@@ -7,11 +7,11 @@ const getRandomMessage = () => {
   return messages.join(' ');
 };
 const createComment = () => ({
-  id: getRandomUniqueInteger(1, 999),
-  avatar: `img/avatar-${getRandomUniqueInteger(1, 6)}.svg`,
+  id: createRandomUniqueInteger(1, 999),
+  avatar: `img/avatar-${createRandomUniqueInteger(1, 6)}.svg`,
   message: getRandomMessage(),
   name: getRandomArrayElement(NAME)
 });
 
 export const createComments = () =>
-  Array.from({ length: getRandomUniqueInteger(0, 30) }, createComment);
+  Array.from({ length: createRandomUniqueInteger(0, 30) }, createComment);
