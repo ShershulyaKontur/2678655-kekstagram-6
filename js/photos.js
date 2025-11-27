@@ -8,7 +8,7 @@ const createPhoto = () => {
     id,
     url: `photos/${id}.jpg`,
     description: getRandomArrayElement(DESCRIPTION),
-    likes: getRandomInteger(15, 200),
+    likes: getRandomInteger(LIKES_COUNT_MIN, LIKES_COUNT_MAX),
     comments: createComments()
   };
 };
