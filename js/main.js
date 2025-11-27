@@ -101,4 +101,3 @@ const createPhoto = () => {
 };
 
 export const similarPhoto = Array.from({length: PHOTO_COUNT}, createPhoto);
-console.log(similarPhoto)
