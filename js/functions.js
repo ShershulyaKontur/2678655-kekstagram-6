@@ -1,24 +1,13 @@
-export function isLengthValid(input, len) {
-  return input.toString().length <= len;
+function isMeetingInWorkHours(startDay, endDay, startMeeting, duration) {
+  const startDayMin = getMinutes(startDay);
+  const endDayMin = getMinutes(endDay);
+  const startMeetingMin = getMinutes(startMeeting);
+  const endMeetingMin = startMeetingMin + duration;
+
+  return startMeetingMin >= startDayMin && endMeetingMin <= endDayMin;
 }
 
-export function isPalindrome(input) {
-  const validatedString = input.toString().replaceAll(' ', '').toLowerCase();
-  const reversedString = validatedString.split('').reverse().join('');
-  return validatedString === reversedString;
+function getMinutes(timeStr) {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  return hours * 60 + minutes;
 }
-
-export function getDigit(input) {
-  if (typeof input === 'number') {
-    return Math.abs(input);
-  }
-  const str = input.toString().replaceAll(' ', '');
-  let result = '';
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] >= '0' && str[i] <= '9') {
-      result += str[i];
-    }
-  }
-  return result ? Number(result) : NaN;
-}
-
