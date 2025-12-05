@@ -13,4 +13,4 @@ const createPhoto = () => {
   };
 };
 
-export const dataPhotos = Array.from({ length: PHOTO_COUNT }, createPhoto);
+export const photosData = Array.from({ length: PHOTO_COUNT }, createPhoto);

@@ -1,5 +1,5 @@
 
-import { dataPhotos } from './photos.js';
+import { photosData } from './photos.js';
 
 export function renderPhotos() {
   const container = document.querySelector('.pictures');
@@ -8,14 +8,19 @@ export function renderPhotos() {
     .querySelector('.picture');
   const photoListFragment = document.createDocumentFragment();
 
-  dataPhotos.forEach(({ url, description, likes, comments }) => {
+  photosData.forEach(({ url, description, likes, comments }) => {
     const photoElement = photoTemplate.cloneNode(true);
-    photoElement.querySelector('.picture__img').src = url;
-    photoElement.querySelector('.picture__img').alt = description;
-    photoElement.querySelector('.picture__likes').textContent = likes;
-    photoElement.querySelector('.picture__comments').textContent = comments.length;
+    const img = photoElement.querySelector('.picture__img');
+    const likesEl = photoElement.querySelector('.picture__likes');
+    const commentsEl = photoElement.querySelector('.picture__comments');
+
+    img.src = url;
+    img.alt = description;
+    likesEl.textContent = likes;
+    commentsEl.textContent = comments.length;
+
     photoListFragment.appendChild(photoElement);
-  });
+});
 
   container.appendChild(photoListFragment);
 }
