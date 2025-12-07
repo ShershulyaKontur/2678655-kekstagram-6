@@ -21,20 +21,21 @@ const getPhotoIdFromSrc = (src) => {
 const findPhotoById = (id) =>
   photosData.find((photo) => photo.id === id);
 
-const renderComments = (comments) => {
-  bigComments.innerHTML = '';
-
-  const commentsHtml = comments.map((comment) => `
+const createCommentsHtml = (data) =>
+  data.map((item) => `
     <li class="social__comment">
       <img
         class="social__picture"
-        src="${comment.avatar}"
-        alt="${comment.name}"
+        src="${item.avatar}"
+        alt="${item.name}"
         width="35" height="35">
-      <p class="social__text">${comment.message}</p>
+      <p class="social__text">${item.message}</p>
     </li>
   `).join('');
 
+const renderComments = (comments) => {
+  bigComments.innerHTML = '';
+  const commentsHtml = createCommentsHtml(comments);
   bigComments.insertAdjacentHTML('beforeend', commentsHtml);
 };
 
@@ -50,34 +51,45 @@ const onDocumentKeydown = (event) => {
   }
 };
 
-function openPicture(picture) {
+const fillPictureData = (picture) => {
   const smallImg = picture.querySelector('.picture__img');
   const likes = picture.querySelector('.picture__likes').textContent;
   const commentsCount = picture.querySelector('.picture__comments').textContent;
   const photoId = getPhotoIdFromSrc(smallImg.src);
   const photo = findPhotoById(photoId);
 
+  if (!photo) {
+    bigComments.innerHTML = '';
+    return;
+  }
+
   bigImg.src = smallImg.src;
   bigDesc.textContent = photo.description;
   bigCountLikes.textContent = likes;
   bigCountComments.textContent = commentsCount;
 
-  if (photo && photo.comments) {
+  if (photo.comments) {
     renderComments(photo.comments);
   } else {
     bigComments.innerHTML = '';
   }
+};
 
+const showPictureModal = () => {
   bigPicture.classList.remove('hidden');
   commentCountBlock.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+};
+
+function openPicture(picture) {
+  fillPictureData(picture);
+  showPictureModal();
 }
 
 closeButton.addEventListener('click', () => {
   closePicture();
-  document.removeEventListener('keydown', onDocumentKeydown);
 });
 
 container.addEventListener('click', (event) => {
