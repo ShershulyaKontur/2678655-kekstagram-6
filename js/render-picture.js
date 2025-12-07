@@ -41,12 +41,12 @@ const renderComments = (comments) => {
 const closePicture = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const onDocumentKeydown = (event) => {
   if (isEscapeKey(event)) {
     closePicture();
-    document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
