@@ -11,9 +11,9 @@ export const createCommentsHtml = (data) =>
   `).join('');
 
 export const getPhotoIdFromSrc = (src) => {
-    const fileName = src.split('/').pop();
-    const numberPart = fileName.split('.')[0];
-    return Number(numberPart);
+  const fileName = src.split('/').pop();
+  const numberPart = fileName.split('.')[0];
+  return Number(numberPart);
 };
 
 export const isEscapeKey = (e) => e.key === 'Escape';

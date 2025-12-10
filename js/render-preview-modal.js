@@ -12,16 +12,13 @@ const commentCountBlock = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
-
-const findPhotoById = (id) =>
-  photosData.find((photo) => photo.id === id);
+const findPhotoById = (id) => photosData.find((photo) => photo.id === id);
 
 const renderComments = (comments) => {
   bigComments.innerHTML = '';
   const commentsHtml = createCommentsHtml(comments);
   bigComments.insertAdjacentHTML('beforeend', commentsHtml);
 };
-
 
 function closePicture() {
   bigPicture.classList.add('hidden');
@@ -80,7 +77,9 @@ const openPicture = (picture) => {
 
 const onContainerClick = (event) => {
   const picture = event.target.closest('.picture');
-  if (!picture) return;
+  if (!picture) {
+    return;
+  }
 
   event.preventDefault();
   openPicture(picture);
