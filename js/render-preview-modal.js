@@ -1,6 +1,6 @@
 import { photosData } from './photos.js';
-import { isEscapeKey, createCommentsHtml, getPhotoIdFromSrc, resetCommentsState} from './utils-modal.js';
-import { COMMENTS_STEP } from './data.js'
+import { isEscapeKey, createCommentsHtml, getPhotoIdFromSrc} from './utils-modal.js';
+import { COMMENTS_STEP } from './data.js';
 
 const container = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
@@ -33,7 +33,12 @@ const renderCommentsPortion = () => {
     commentsLoaderButton.classList.remove('hidden');
   }
 
-}
+};
+
+const resetCommentsState = () => {
+  currentComments = [];
+  shownCommentsCount = 0;
+};
 
 function closePicture() {
   bigPicture.classList.add('hidden');
@@ -41,7 +46,7 @@ function closePicture() {
   document.removeEventListener('keydown', onDocumentKeydown);
   closeButton.removeEventListener('click', closePicture);
   commentsLoaderButton.removeEventListener('click', onCommentsLoaderButtonClick);
-  resetCommentsState()
+  resetCommentsState();
 }
 
 function onDocumentKeydown (event){
@@ -68,7 +73,7 @@ const fillPictureData = (picture) => {
   bigCountLikes.textContent = likes;
   bigCountComments.textContent = commentsCount;
 
-  currentComments = photo.comments ?? [];
+  currentComments = photo.comments || [];
   shownCommentsCount = COMMENTS_STEP;
 
   if (currentComments.length === 0) {
@@ -104,9 +109,9 @@ const onContainerClick = (event) => {
   openPicture(picture);
 };
 
-const onCommentsLoaderButtonClick = () => {
+function onCommentsLoaderButtonClick(){
   shownCommentsCount += COMMENTS_STEP;
   renderCommentsPortion();
-};
+}
 
 export const initPreviewModal = () => container.addEventListener('click', onContainerClick);
