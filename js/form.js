@@ -26,11 +26,10 @@ function closeForm() {
 }
 
 function onDocumentKeydown(event) {
-  if (!isEscapeKey(event) || isTextFieldFocused()) {
-    return;
+  if (isEscapeKey(event) && !isTextFieldFocused()) {
+    event.preventDefault();
+    closeForm();
   }
-  event.preventDefault();
-  closeForm();
 }
 
 function showModal() {
