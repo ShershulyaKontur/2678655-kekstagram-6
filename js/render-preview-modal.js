@@ -16,6 +16,7 @@ const bigDesc = bigPicture.querySelector('.social__caption');
 const commentCountBlock = bigPicture.querySelector('.social__comment-count');
 const commentsLoaderButton = bigPicture.querySelector('.comments-loader');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
+const body = document.body;
 
 let currentComments = [];
 let shownCommentsCount = 0;
@@ -48,7 +49,7 @@ function onDocumentKeydown(event) {
 
 function closePicture() {
   bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  body.classList.remove('modal-open');
   commentsLoaderButton.removeEventListener('click', onCommentsLoaderButtonClick);
   resetComments();
 }
@@ -90,7 +91,7 @@ function fillPictureData(picture) {
 
 function showPictureModal() {
   bigPicture.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown, { once: true });
   closeButton.addEventListener('click', closePicture, { once: true });
 }
