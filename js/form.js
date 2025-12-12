@@ -12,14 +12,12 @@ const HASHTAG_REGEX = /^#[a-zа-яё0-9]+$/i;
 const MAX_HASHTAGS = 5;
 const MAX_HASHTAG_LENGTH = 20;
 
-// ===== Открытие / закрытие модалки =====
 
 function resetUploadInput() {
   uploadInput.value = '';
 }
 
 function closeForm() {
-  console.log('closeForm');
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   form.reset();
@@ -28,40 +26,20 @@ function closeForm() {
 }
 
 function onDocumentKeydown(event) {
-  console.log('keydown handler', event.key);
-
-  if (!isEscapeKey(event)) {
+  if (!isEscapeKey(event) || isTextFieldFocused()) {
     return;
   }
-
-  if (isTextFieldFocused()) {
-    console.log('Esc in text field, ignore');
-    event.stopPropagation();
-    return;
-  }
-
   event.preventDefault();
-  console.log('Esc, close form');
   closeForm();
 }
 
 function showModal() {
-  console.log('showModal');
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  closeButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    closeForm();
-  }, { once: true });
+  closeButton.addEventListener('click', closeForm, { once: true });
 }
 
-export function initForm() {
-  console.log('initForm');
-  uploadInput.addEventListener('change', showModal);
-}
-
-// ===== Pristine =====
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -81,7 +59,6 @@ function getHashtags(value) {
 
 function isTextFieldFocused() {
   const activeElement = document.activeElement;
-  console.log('activeElement:', activeElement);
   return activeElement === hashtagField || activeElement === descField;
 }
 
@@ -107,9 +84,16 @@ function validateHashtags(value) {
 
 pristine.addValidator(hashtagField, validateHashtags);
 
-form.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
-    evt.preventDefault();
-  }
-});
+
+
+export function initForm() {
+  uploadInput.addEventListener('change', showModal);
+
+  form.addEventListener('submit', (evt) => {
+    const isValid = pristine.validate();
+    if (!isValid) {
+      evt.preventDefault();
+    }
+  });
+}
+
