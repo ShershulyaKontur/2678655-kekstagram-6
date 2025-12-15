@@ -1,5 +1,5 @@
 import { isEscapeKey } from './utils-modal.js';;
-import { isValidateHashtags, isValidateDesc } from './validators.js';
+import { isValidateHashtags, isValidateDesc } from './validate.js';
 
 const overlay = document.querySelector('.img-upload__overlay');
 const uploadInput = document.querySelector('.img-upload__input');
@@ -9,19 +9,9 @@ const hashtagField = form.querySelector('.text__hashtags');
 const descField = form.querySelector('.text__description');
 const body = document.body;
 
-
 function resetUploadInput() {
   uploadInput.value = '';
 }
-
-function closeForm() {
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  form.reset();
-  resetUploadInput();
-  document.removeEventListener('keydown', onDocumentKeydown);
-}
-
 function onDocumentKeydown(event) {
   if (isEscapeKey(event) && !isTextFieldFocused()) {
     event.preventDefault();
@@ -33,25 +23,32 @@ function isTextFieldFocused() {
   return activeElement === hashtagField || activeElement === descField;
 }
 
-function showModal() {
+function openModal() {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   closeButton.addEventListener('click', closeForm, { once: true });
 }
 
+function closeForm() {
+  overlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+  form.reset();
+  resetUploadInput();
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
+
+
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'span',
-  errorTextClass: 'img-upload__error'
+  errorTextParent: 'img-upload__field-wrapper'
 });
 
 pristine.addValidator(hashtagField, isValidateHashtags);
 pristine.addValidator(descField, isValidateDesc);
 
 export function initForm() {
-  uploadInput.addEventListener('change', showModal);
+  uploadInput.addEventListener('change', openModal);
 
   form.addEventListener('submit', (evt) => {
     const isValid = pristine.validate();
