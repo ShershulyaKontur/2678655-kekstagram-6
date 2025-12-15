@@ -31,7 +31,7 @@ function appendCommentsSlice() {
   const start = shownCommentsCount;
   const end = start + COMMENTS_STEP;
   const slice = currentComments.slice(start, end);
-  const lengthComments = currentComments.length
+  const lengthComments = currentComments.length;
 
   if (slice.length === 0) {
     return;
