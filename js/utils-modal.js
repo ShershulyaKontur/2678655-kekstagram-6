@@ -1,34 +1,24 @@
-export function createCommentsHtml(data) {
-  return data.map((item) => `
+function createCommentHtml(comment) {
+  return `
     <li class="social__comment">
       <img
         class="social__picture"
-        src="${item.avatar}"
-        alt="${item.name}"
-        width="35" height="35">
-      <p class="social__text">${item.message}</p>
+        src="${comment.avatar}"
+        alt="${comment.name}"
+        width="35" height="35"
+      >
+      <p class="social__text">${comment.message}</p>
     </li>
-  `).join('');
+  `;
 }
-
 export function getPhotoIdFromSrc(src){
   const fileName = src.split('/').pop();
   const numberPart = fileName.split('.')[0];
   return Number(numberPart);
 }
-
 export function isEscapeKey(e) {
   return e.key === 'Escape';
 }
-
-export function renderCommentsSlice(currentComments, shownCommentsCount) {
-  const dataSlice = currentComments.slice(0, shownCommentsCount);
-  const countCommentHtml = `
-    ${dataSlice.length} из <span class="comments-count">${currentComments.length}</span> комментариев`;
-
-  return {
-    commentsHtml: createCommentsHtml(dataSlice),
-    commentCountHtml: countCommentHtml,
-    isLoaderHidden: shownCommentsCount >= currentComments.length
-  };
+export function createCommentsSlice(comments) {
+  return comments.map((comment) => createCommentHtml(comment)).join('');
 }
