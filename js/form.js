@@ -1,4 +1,4 @@
-import { isEscapeKey } from './utils-modal.js';;
+import { isEscapeKey } from './utils-modal.js';
 import { isValidateHashtags, isValidateDesc } from './validate.js';
 
 const overlay = document.querySelector('.img-upload__overlay');
