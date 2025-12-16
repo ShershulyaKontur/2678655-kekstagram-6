@@ -13,12 +13,14 @@ const body = document.body;
 function resetUploadInput() {
   uploadInput.value = '';
 }
+
 function onDocumentKeydown(event) {
   if (isEscapeKey(event) && !isTextFieldFocused()) {
     event.preventDefault();
     closeForm();
   }
 }
+
 function isTextFieldFocused() {
   const activeElement = document.activeElement;
   return activeElement === hashtagField || activeElement === descField;
