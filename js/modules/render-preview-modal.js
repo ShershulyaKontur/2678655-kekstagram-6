@@ -118,6 +118,6 @@ function onContainerClick(evt) {
   openPicture(picture);
 }
 export function initPreviewModal(data) {
-  photos = data;
+  photos = data || [];
   container.addEventListener('click', onContainerClick);
 }

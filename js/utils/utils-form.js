@@ -1,62 +1,68 @@
-
 import { SubmitButtonText } from '../data/data.js';
 import { isEscapeKey } from './utils-modal.js';
 
-const overlay = document.querySelector('.img-upload__overlay');
 const uploadInput = document.querySelector('.img-upload__input');
 const body = document.body;
 
-function showMessage(templateId, blockSelector, buttonSelector, options = {}) {
-  const { reopenForm = false, chooseNewFile = false } = options;
+function showMessage(templateId, blockSelector, option = {}) {
+  const element = createMessageElement(templateId, blockSelector);
+  body.appendChild(element);
 
-  const template = document
-    .querySelector(templateId)
+  setupCloseHandlers(element, blockSelector, option);
+
+  return element;
+}
+
+function createMessageElement(templateId, blockSelector) {
+  const template = document.querySelector(templateId)
     .content
     .querySelector(blockSelector);
 
-  const element = template.cloneNode(true);
-  body.appendChild(element);
-
-  const closeButton = element.querySelector(buttonSelector);
-  const blockSelectorInner = element.querySelector(`${blockSelector}__inner`) || element;
-
-  function removeMessage(){
-    element.remove();
-    document.removeEventListener('keydown', onEscKeydown);
-    document.removeEventListener('click', onOutsideClick);
-
-    if (reopenForm) {
-      overlay.classList.remove('hidden');
-      body.classList.add('modal-open');
-    }
+  if (blockSelector === '.error') {
+    Object.assign(template.style, {zIndex: '10'});
   }
 
-  function closeWithNewFile(){
-    removeMessage();
-    if (chooseNewFile) {
-      uploadInput.value = '';
-      uploadInput.click();
-    }
-  }
+  return template.cloneNode(true);
+}
 
-  function onEscKeydown(evt){
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      removeMessage();
-    }
-  }
-
-  function onOutsideClick(evt){
-    if (!blockSelectorInner.contains(evt.target)) {
-      removeMessage();
-    }
-  }
-
-  closeButton.addEventListener('click', closeWithNewFile);
+function setupCloseHandlers(element, blockSelector, { chooseNewFile = false } = {}) {
+  const closeButton = element.querySelector(`${blockSelector}__button`);
+  const inner = element.querySelector(`${blockSelector}__inner`) || element;
+  closeButton.addEventListener('click', () => closeMessage(element, chooseNewFile));
   document.addEventListener('keydown', onEscKeydown);
-  document.addEventListener('click', onOutsideClick);
+  document.addEventListener('click', (evt) => onOutsideClick(evt, inner, element));
+}
 
-  return element;
+function closeMessage(element, chooseNewFile) {
+  removeMessage(element);
+  if (chooseNewFile) {
+    uploadInput.value = '';
+    console.log('123')
+    uploadInput.click();
+  }
+}
+
+function removeMessage(element) {
+  element.remove();
+  document.removeEventListener('keydown', onEscKeydown);
+  document.removeEventListener('click', onOutsideClick);
+}
+
+function onEscKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    const element = document.querySelector('.success, .error');
+    if (element) {
+      removeMessage(element);
+    }
+  }
+}
+
+function onOutsideClick(evt, inner, element) {
+  if (!inner.contains(evt.target)) {
+    removeMessage(element);
+  }
 }
 
 export function setSubmitButtonState(button, isBlocked) {
@@ -71,14 +77,12 @@ export function isTextFieldFocused(fieldFirst, fieldSecond) {
 
 export function onSuccessSend() {
   showMessage('#success', '.success', '.success__button', {
-    reopenForm: false,
     chooseNewFile: false,
   });
 }
 
 export function onErrorSend() {
   showMessage('#error', '.error', '.error__button', {
-    reopenForm: false,
     chooseNewFile: true,
   });
 }

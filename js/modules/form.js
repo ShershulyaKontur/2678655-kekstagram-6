@@ -30,7 +30,7 @@ const {
   DUPLICATE_HASHTAGS,
   INVALID_HASHTAG,
   MAX_DESCRIPTION
-}= PristineMessage;
+} = PristineMessage;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -44,13 +44,13 @@ addFieldValidator(pristine, hashtagField, isUniqueTags, DUPLICATE_HASHTAGS, 2, t
 addFieldValidator(pristine, hashtagField, isEachTagValid, INVALID_HASHTAG, 1, true);
 addFieldValidator(pristine, descField, isDescLength, MAX_DESCRIPTION);
 
-function resetUploadInput() {
-  uploadInput.value = '';
-}
-
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !isTextFieldFocused(hashtagField, descField)) {
     evt.preventDefault();
+    const notification = document.querySelector('.success, .error');
+    if (notification) {
+      return;
+    }
     closeForm();
   }
 }
@@ -66,17 +66,12 @@ function closeForm() {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   form.reset();
-  resetUploadInput();
+  uploadInput.value = '';
   document.removeEventListener('keydown', onDocumentKeydown);
 }
-function hideForm(){
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  uploadInput.value = '';
-}
+
 async function handleFormSubmit(evt) {
   evt.preventDefault();
-
   const isValid = pristine.validate();
   if (!isValid) {
     return;
@@ -88,7 +83,6 @@ async function handleFormSubmit(evt) {
     closeForm();
     onSuccessSend();
   } catch (error) {
-    hideForm();
     onErrorSend();
   } finally {
     setSubmitButtonState(submitButton, false);

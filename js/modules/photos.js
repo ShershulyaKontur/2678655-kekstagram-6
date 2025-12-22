@@ -3,9 +3,8 @@ import { getData } from './api.js';
 import { URL } from '../data/data.js';
 import { initPreviewModal } from './render-preview-modal.js';
 
-const container = document.querySelector('.pictures');
-
 function showError() {
+  const container = document.querySelector('.pictures');
   const errorFragment = createErrorFragment();
   container.appendChild(errorFragment);
 
@@ -37,8 +36,6 @@ export async function initPhotos() {
     renderPhotos(photos);
     initPreviewModal(photos);
   } catch (error) {
-    renderPhotos(null);
-    initPreviewModal(null);
     showError();
   }
 }
