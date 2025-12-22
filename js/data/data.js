@@ -2,7 +2,6 @@ export const COMMENTS_STEP = 5;
 export const MAX_HASHTAGS = 5;
 export const MAX_HASHTAG_LENGTH = 20;
 export const MAX_DESC_LENGTH = 140;
-export const ALERT_DELAY = 5000;
 export const URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
 
 export const PristineMessage = {
@@ -20,7 +19,7 @@ export const ResponceMessage = {
 
 export const Route = {
   GET_DATA: '/data',
-  SEND_DATA: '/',
+  SEND_DATA: '/1',
 };
 
 export const SubmitButtonText = {

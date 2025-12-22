@@ -18,6 +18,7 @@ function showMessage(templateId, blockSelector, buttonSelector, options = {}) {
   body.appendChild(element);
 
   const closeButton = element.querySelector(buttonSelector);
+  const blockSelectorInner = element.querySelector(`${blockSelector}__inner`) || element;
 
   function removeMessage(){
     element.remove();
@@ -46,7 +47,7 @@ function showMessage(templateId, blockSelector, buttonSelector, options = {}) {
   }
 
   function onOutsideClick(evt){
-    if (!document.querySelector(`${blockSelector}__inner`).contains(evt.target)) {
+    if (!blockSelectorInner.contains(evt.target)) {
       removeMessage();
     }
   }

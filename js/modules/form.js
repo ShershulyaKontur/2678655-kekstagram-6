@@ -72,6 +72,7 @@ function closeForm() {
 function hideForm(){
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
+  uploadInput.value = '';
 }
 async function handleFormSubmit(evt) {
   evt.preventDefault();
