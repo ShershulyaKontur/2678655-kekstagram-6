@@ -19,7 +19,7 @@ export const ResponseMessage = {
 };
 
 export const Route = {
-  GET_DATA: '/data1',
+  GET_DATA: '/data',
   SEND_DATA: '/',
 };
 
